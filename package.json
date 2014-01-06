@@ -1,9 +1,10 @@
 {
   "author": "liandong liu",
   "contacts": ["liu@liandong.org"],
-  "name": "mockJSON",
+  "name": "mockjson",
   "description": "mock json data on both client side and server side",
   "version": "0.0.1",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/linkwisdom/mockJSON.git"
