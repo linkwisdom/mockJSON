@@ -1,0 +1,24 @@
+{
+  "author": "liandong liu",
+  "contacts": ["liu@liandong.org"],
+  "name": "mockJSON",
+  "description": "mock json data on both client side and server side",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/linkwisdom/mockJSON.git"
+  },
+  "keywords": [
+    "mock",
+    "mockJSON",
+    "mockData"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
