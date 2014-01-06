@@ -1,0 +1,65 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="cache-control" content="no-cache" />
+        <script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+        <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-6/esl.js"></script>
+
+        <link rel="stylesheet" href="./css/test.css">
+        <title>mockJSON - mock data on server or client</title>
+    </head>
+    <body>
+    
+    <div class="list-panel">
+        <h1>mockJSON</h1>
+        <div class="inner">
+            <p class="intro">mockJSON - mock data on server or client
+                <a href="https://github.com/linkwisdom/mockJSON">more</a>
+            </p>
+            <h2>关键词</h2>
+            <ul id="keywords">
+            </ul>
+            <h2>接口桩</h2>
+            <ul id="mock-api">
+            </ul>
+        </div>
+    </div>
+    
+    <div id="template">
+        <h1>桩模板/ stub Template</h1>
+        <div class="inner">
+            <textarea></textarea>
+        </div>
+        <div class="mid"></div>
+        <div class="buttons">
+            <button id="button-generate">解析</button>
+        </div>
+    </div>
+    
+    <div id="result">
+        <h1>输出数据/ Result data</h1>
+        <div class="inner">
+            <textarea></textarea>
+        </div>
+    </div>
+    
+
+    <script>
+        require.config({
+            'baseUrl': '../',
+            'paths': {
+                'mockJSON': 'src/mockjson_amd',
+                'js': 'test/js'
+            }
+        });
+
+        $(document).ready(function() {
+            require(['js/try'], function(start) {
+                start && start();
+            });
+        });
+    </script>
+
+    </body>
+</html>

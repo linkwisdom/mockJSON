@@ -1,0 +1,104 @@
+    body, html {
+        padding:0;
+        margin:0;
+        color:#333;
+        color:#000;
+        background:#EEE;
+        font-family:'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
+        font-family: Georgia, 'Hiragino Mincho Pro', serif;
+        font-size:14px;
+        line-height:1.5;
+        overflow:hidden;
+    }
+    
+    h1, h2, h3, h4, h5, p, pre {
+        margin:0;
+        padding:8px 0 0;
+        font-weight:normal;
+    }
+    
+    h1 {
+        font-size:30px;
+        line-height:60px;
+        padding:0 8px;
+        text-shadow:1px 1px #FFF;
+    }
+    
+    textarea {
+        font-size:14px;
+        font-family: 'Courier New', monospace;
+        -moz-border-radius:4px;
+    }
+
+    .list-panel,
+    #template,
+    #result,
+    .inner {
+        position:absolute;
+        left:0;
+        top:0;
+        bottom:0;
+        right:0;
+    }
+    
+    .inner {
+        top:60px;
+        right:8px;
+        bottom:8px;
+    }
+    
+    #template textarea,
+    #result textarea {
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        box-sizing:border-box;
+        background:#FFF;
+        border:1px solid #CCC;
+        border-right-color:#EEE;
+        border-bottom-color:#EEE;
+        width:100%;
+        height:100%;
+        padding:8px;
+    }
+    
+    .list-panel {
+        right:80%;
+    }
+    
+    #template {
+        left:20%;
+        right:40%;
+    }
+    
+    #result {
+        left:60%;
+    }
+    
+    .buttons {
+        position:absolute;
+        top: 108px;
+        right: 40px;
+    }
+    
+    .list-panel .inner {
+        padding:8px;
+    }
+    .list-panel ul {
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
+    
+    .list-panel ul li {
+        padding:0 0 0;
+    }
+    
+    .list-panel p {
+        margin:0;
+        padding:8px 0 0;
+    }
+
+    #mock-api li {
+        cursor: pointer;
+        text-decoration: underline;
+    }
