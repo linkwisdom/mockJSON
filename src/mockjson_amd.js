@@ -1,20 +1,18 @@
 define(function(require, exports, module) {
     var mockMap = {};
 
-    // 请求上下文
+    // context
     exports.context = null;
 
     // source meta data
     exports.data = {
-        NUMBER: "0123456789".split(''),
-        LETTER_UPPER: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''),
-        LETTER_LOWER: "abcdefghijklmnopqrstuvwxyz".split('')
+        NUMBER: '0123456789'.split(''),
+        LETTER_UPPER: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+        LETTER_LOWER: 'abcdefghijklmnopqrstuvwxyz'.split('')
     };
 
     function getRandomData(key, index) {
-        key = key.substr(1); // remove "@"
-
-        var params = key.match(/\(([^\)]+)\)/g) || [];
+        key = key.substr(1);
 
         if (!(key in exports.data)) {
            return key;
@@ -28,20 +26,12 @@ define(function(require, exports, module) {
                 return a[index];
 
             case 'function':
-                return a(exports.context, index);
+                return a(exports.context || {}, index);
         }
-    }
-
-    function randInt(min, max) {
-        return parseInt(min + Math.random() * (max - min));
     }
 
     function rand() {
         return Math.random();
-    }
-
-    function randomDate() {
-        return new Date(Math.floor(rand() * new Date().valueOf()));
     }
 
     function isArray(object) {
@@ -52,9 +42,9 @@ define(function(require, exports, module) {
 
 
     function type(obj) {
-        return isArray(obj) ? 'array' : (obj === null) 
-            ? 'null' 
-            : typeof obj;
+        return isArray(obj)
+            ? 'array'
+            : (obj === null) ? 'null' : typeof obj;
     }
 
     /**
@@ -68,9 +58,9 @@ define(function(require, exports, module) {
         var length = 0;
         var matches = (name || '').match(/\w+\|(\d+)-(\d+)/);
         if (matches) {
-            var length_min = parseInt(matches[1], 10);
-            var length_max = parseInt(matches[2], 10);
-            length = Math.round(rand() * (length_max - length_min)) + length_min;
+            var min = parseInt(matches[1], 10);
+            var max = parseInt(matches[2], 10);
+            length = Math.round(rand() * (max - min)) + min;
         }
 
         var generated = null;
@@ -85,10 +75,11 @@ define(function(require, exports, module) {
             case 'object':
                 generated = {};
                 for (var p in template) {
-                    generated[p.replace(/\|(\d+-\d+|\+\d+)/, '')] = me.generate(template[p], p);
-                    var inc_matches = p.match(/\w+\|\+(\d+)/);
-                    if (inc_matches && type(template[p]) == 'number') {
-                        var increment = parseInt(inc_matches[1], 10);
+                    var kstr = p.replace(/\|(\d+-\d+|\+\d+)/, '');
+                    generated[kstr] = me.generate(template[p], p);
+                    var matches = p.match(/\w+\|\+(\d+)/);
+                    if (matches && type(template[p]) == 'number') {
+                        var increment = parseInt(matches[1], 10);
                         template[p] += increment;
                     }
                 }
@@ -135,9 +126,10 @@ define(function(require, exports, module) {
                     }
 
                 } else {
-                    generated = "";
+                    generated = '';
                     for (var i = 0; i < length; i++) {
-                        generated += String.fromCharCode(Math.floor(rand() * 255));
+                        var ch = Math.floor(rand() * 255);
+                        generated += String.fromCharCode(ch);
                     }
                 }
                 break;
@@ -147,8 +139,7 @@ define(function(require, exports, module) {
                 break;
         }
         return generated;
-
-    }
+    };
 
     /**
      * hijact request
@@ -164,6 +155,12 @@ define(function(require, exports, module) {
         };
     };
 
+    /**
+     * get mock data
+     * @param  {string} path  path/url or anything
+     * @param  {Object} param args/context or anything
+     * @return {Object/string/array} 
+     */
     exports.get = function(path, param) {
         var me = this;
 
@@ -177,9 +174,8 @@ define(function(require, exports, module) {
             var req = mock.request;
             if (('string' == typeof req && req == path)
                     || (req.test && req.test(path))) {
-                return me.generate(mock.template)
+                return me.generate(mock.template);
             }
         }
     };
-
-})
+});

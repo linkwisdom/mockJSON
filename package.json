@@ -3,7 +3,7 @@
   "contacts": ["liu@liandong.org"],
   "name": "mockjson",
   "description": "mock json data on both client side and server side",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "src/index.js",
   "repository": {
     "type": "git",
