@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Mockjson by linkwisdom</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Mockjson</h1>
+          <h2>generate mock data both on client-end and server-end</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/linkwisdom/mockJSON/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/linkwisdom/mockJSON/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/linkwisdom/mockJSON" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="mockjson" class="anchor" href="#mockjson"><span class="octicon octicon-link"></span></a>mockjson</h1>
+
+<ul>
+<li>mock json data on both client side and server side</li>
+</ul><h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a name="install-and-include" class="anchor" href="#install-and-include"><span class="octicon octicon-link"></span></a>install and include</h2>
+
+<h3>
+<a name="require-by-npm-and-run-by-node-apps" class="anchor" href="#require-by-npm-and-run-by-node-apps"><span class="octicon octicon-link"></span></a>require by npm and run by node apps</h3>
+
+<pre><code>npm install mockjson
+
+var mock = require('mockjson');
+</code></pre>
+
+<h3>
+<a name="require-on-client-browser" class="anchor" href="#require-on-client-browser"><span class="octicon octicon-link"></span></a>require on client browser</h3>
+
+<p>require by requireJS, seaJS or esl, any standary client amd loader</p>
+
+<pre><code>var mock = require('../mockJSON');
+</code></pre>
+
+<h2>
+<a name="createadd-vaiables" class="anchor" href="#createadd-vaiables"><span class="octicon octicon-link"></span></a>create/add vaiables</h2>
+
+<pre><code>mock.data.USERNAME = ['jack', 'willian', 'jerry'];
+mock.data.GENDER = ['boy', 'girl', 'other'];
+</code></pre>
+
+<h2>
+<a name="createadd-template" class="anchor" href="#createadd-template"><span class="octicon octicon-link"></span></a>create/add template</h2>
+
+<pre><code>var temp = {
+    "id|+1": 10000,
+    "name": "@USERNAME",
+    "gender|0-1": "@GENDER",
+    "vip|0-1": false
+}
+</code></pre>
+
+<h2>
+<a name="render-the-template" class="anchor" href="#render-the-template"><span class="octicon octicon-link"></span></a>render the template</h2>
+
+<p>var json = mock.generate(temp);</p>
+
+<h2>
+<a name="bind-or-render-by-set--get" class="anchor" href="#bind-or-render-by-set--get"><span class="octicon octicon-link"></span></a>bind or render by <code>set</code> &amp; <code>get</code>
+</h2>
+
+<pre><code>var userList = {
+    "data|1-30": [
+        {
+            "id|1000-5000": 1000,
+            "name": "@USERNAME",
+            "budy|0-200": ["@NUMBER"]
+        }
+    ]
+};
+
+mock.set('GET/user/list', userList);
+
+
+function response(path, param, callback) {
+    var result = mock.get('GET/user/list', {
+        path: path,
+        param: param
+    });
+}
+</code></pre>
+
+<h2>
+<a name="advanced-methods" class="anchor" href="#advanced-methods"><span class="octicon octicon-link"></span></a>Advanced methods</h2>
+
+<h3>
+<a name="setting-variables-attributes--with-function" class="anchor" href="#setting-variables-attributes--with-function"><span class="octicon octicon-link"></span></a>setting variables' attributes  with function</h3>
+
+<pre><code>/**
+ * generate attributes with function;
+ * @param {Objects} context depends on args passed to `mock.get`
+ * @param {number} idx   the index of temperary generating 
+ */
+mock.data.IDEA = function(context, idx) {
+    context || (context = {param: {ideaid: idx}});
+
+    var param = context.param;
+
+    var idea = {
+        index: idx,
+        ideaid: param.ideaid,
+        title: mock.generate("BUY BEST @KEYWORDS @PROVINCE"),
+        content: ""
+    };
+
+    param.unitid &amp;&amp; (idea.unitid == param.unitid);
+
+    return idea;
+}
+
+mock.set(/GET\/idea\/.*/, {
+        "idea|0-10": "@IDEA"
+});
+
+var data = mock.get("GET/idea/list", {param: {
+        userid: 1233,
+        unitid: 111,
+        ideaid: 1333
+}});
+</code></pre>
+
+<h2>
+<a name="test-demo" class="anchor" href="#test-demo"><span class="octicon octicon-link"></span></a>test demo</h2>
+
+<pre><code>&gt; mock.generate("@NUMBER") 
+ 12
+
+&gt; {"list|0-9": "@NUMBER"}
+
+{ 
+    "list" : "863802"
+}
+
+&gt; {"list|1-9": ["@NUMBER"]}
+
+{
+    "list" : [ "5", "6", "8"]
+}
+
+&gt; {"list|0-1": true}
+
+{"list" : false}
+
+&gt; {"user|3-3": [{"id|+1": 13}]}
+
+{ 
+    "user" : [ 
+        {"id" : 13},
+        {"id" : 14},
+        {"id" : 15}
+    ]
+}
+</code></pre>
+        </section>
+
+        <footer>
+          Mockjson is maintained by <a href="https://github.com/linkwisdom">linkwisdom</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("mockjson");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
