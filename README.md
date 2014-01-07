@@ -3,23 +3,19 @@
 
 # Usage
 
-## install
-- require by npm and run by node apps
+## install and include
+### require by npm and run by node apps
 
     npm install mockjson
 
     var mock = require('mockjson');
 
-- require on client browser
-# require by requireJS, seaJS or esl, any standary client amd loader
+### require on client browser
+  
+   require by requireJS, seaJS or esl, any standary client amd loader
 
     var mock = require('../mockJSON');
 
-
-## include
-
-    var mock = require('mockjson');
-  
 ## create/add vaiables
 
     
