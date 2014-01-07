@@ -3,8 +3,20 @@
 
 # Usage
 
-## include
+## install
+- require by npm and run by node apps
 
+    npm install mockjson
+
+    var mock = require('mockjson');
+
+- require on client browser
+# require by requireJS, seaJS or esl, any standary client amd loader
+
+    var mock = require('../mockJSON');
+
+
+## include
 
     var mock = require('mockjson');
   
@@ -57,7 +69,7 @@
 
     /**
      * generate attributes with function;
-     * @param {Objects} context depends on what args passed to `mock.set`
+     * @param {Objects} context depends on args passed to `mock.get`
      * @param {number} idx   the index of temperary generating 
      */
     mock.data.IDEA = function(context, idx) {

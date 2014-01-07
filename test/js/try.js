@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    var mock = require('mockJSON');
+    var mock = require('mockjson');
     var mockData = require('js/mockData');
     var formatJSON = require('js/formatJSON');
     var ao = require('js/aopackage');
