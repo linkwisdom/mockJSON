@@ -12,7 +12,7 @@
 
     
     mock.data.USERNAME = ['jack', 'willian', 'jerry'];
-    mock.data.GENDER = ['jack', 'willian', 'jerry'];
+    mock.data.GENDER = ['boy', 'girl', 'other'];
   
 ## create/add template
     
@@ -30,8 +30,7 @@
    var json = mock.generate(temp);
    
 ## bind or render by `set` & `get`
-    
-    
+
     var userList = {
         "data|1-30": [
             {
@@ -51,5 +50,71 @@
             param: param
         });
     }
-    
+
+## Advanced methods
+
+### setting variables' attributes  with function
+
+    /**
+     * generate attributes with function;
+     * @param {Objects} context depends on what args passed to `mock.set`
+     * @param {number} idx   the index of temperary generating 
+     */
+    mock.data.IDEA = function(context, idx) {
+        context || (context = {param: {ideaid: idx}});
+
+        var param = context.param;
+
+        var idea = {
+            index: idx,
+            ideaid: param.ideaid,
+            title: mock.generate("BUY BEST @KEYWORDS @PROVINCE"),
+            content: ""
+        };
+
+        param.unitid && (idea.unitid == param.unitid);
+
+        return idea;
+    }
+
+    mock.set(/GET\/idea\/.*/, {
+            "idea|0-10": "@IDEA"
+    });
+
+    var data = mock.get("GET/idea/list", {param: {
+            userid: 1233,
+            unitid: 111,
+            ideaid: 1333
+    }});
+
+## test demo
+
+    > mock.generate("@NUMBER") 
+     12
+
+    > {"list|0-9": "@NUMBER"}
+
+    { 
+        "list" : "863802"
+    }
+
+    > {"list|1-9": ["@NUMBER"]}
+
+    {
+        "list" : [ "5", "6", "8"]
+    }
+
+    > {"list|0-1": true}
+
+    {"list" : false}
+
+    > {"user|3-3": [{"id|+1": 13}]}
+
+    { 
+        "user" : [ 
+            {"id" : 13},
+            {"id" : 14},
+            {"id" : 15}
+        ]
+    }
 
