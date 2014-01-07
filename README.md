@@ -99,6 +99,42 @@
             ideaid: 1333
     }});
 
+## include template package
+
+    var pkg = require('./mypackage');
+    mock.include(pkg);
+    var fruit = mock.get('fruit');
+    var orange = mock.get('orange');
+
+-- the content of `mypackage.js` is listed as:
+
+    // local variables
+    exports.data = {
+        'COLOR': ['red', 'green', 'blue'],
+        'SHAPE': ['rect', 'triangle', 'circle', 'ball'],
+        'FRUIT': ['apple', 'orangle', 'peach', 'berry']
+    };
+    
+    // template fruit
+    exports.fruit = {
+        "name": "@FRUIT",
+        "color": "@COLOR",
+        "shape": "@SHAPE",
+        "number|0-5": "@NUMBER"
+    };
+
+    // template orange
+    exports.orange = {
+        "color": "@COLOR",
+        "shape": "@SHAPE",
+        "number|0-5": "@NUMBER"
+    };
+
+
+including the template file can auto loading all the `exports.xxx` object as tamplate; 
+and `exports.data` as local variable in package
+
+
 ## test demo
 
     > mock.generate("@NUMBER") 

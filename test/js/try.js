@@ -6,7 +6,8 @@ define(function(require, exports, module) {
 
     function start() {
         mock.data = $.extend(mock.data, mockData);
-        mock.data = $.extend(mock.data, ao.data);
+
+        mock.include(ao);
 
         var template1 = {
             "condition|1-2": [{
@@ -15,7 +16,7 @@ define(function(require, exports, module) {
             }]
         };
 
-        $('#template textarea').val(formatJSON(ao.GET_nikon_detail));
+        $('#template textarea').val(formatJSON(template1));
         $('#result textarea').val(''); // reset
 
         $.each(mock.data, function(keyword) {
@@ -33,7 +34,7 @@ define(function(require, exports, module) {
             if (item in ao) {
                 $('#template textarea').val(formatJSON(ao[item]));
                 if (item != 'data') {
-                    parseData();
+                    parseData(item);
                 }
             }
         });
@@ -43,13 +44,13 @@ define(function(require, exports, module) {
             parseData();
         });
 
-        function parseData() {
+        function parseData(path) {
             try {
                 var json = jQuery.parseJSON($('#template textarea').val());
 
                 mock.set('mockme.json', json);
 
-                var data = mock.get('mockme.json', {userid: '12344'});
+                var data = mock.get(path || 'mockme.json', {userid: '12344'});
                 $('#result textarea').val(formatJSON(data));
 
             } catch (e) {

@@ -16,18 +16,29 @@ var tpl = {
        "sons": null,
        "daughters|0-3": [{
            "age|0-31": 0,
-           "name": "FEMALE_FIRST_NAME"
+           "name": "@FEMALE_FIRST_NAME"
        }]
    }]
 };
 
- var tpl = mock.generate(tpl);
+//var tpl = mock.generate(tpl);
  
- console.log(tpl);
-
 // mock.set('GET/nikon/detail', {
 //     "fathers|5-10":[{"id|+1": 120}]
 // });
 
 // var data = mock.get('GET/nikon/detail', {});
 // console.log(data);
+
+
+var data = mock.generate(tpl, {
+    'FEMALE_FIRST_NAME': ['jerry', "kate", 'lucy']
+});
+
+console.log(JSON.stringify(data));
+
+var obj = require('./obj');
+
+mock.include(obj);
+
+console.log(mock.get('fruit'));
