@@ -1,28 +1,28 @@
 # mockjson
-- 解决前后端ajax数据构造问题
+- mock json data on both client side and server side
 
-# 使用方法
+# Usage
 
-## 安装
-### 服务端nodejs安装
+## install and include
+### require by npm and run by node apps
 
     npm install mockjson
 
     var mock = require('mockjson');
 
-### 客户端
+### require on client browser
   
    require by requireJS, seaJS or esl, any standary client amd loader
 
     var mock = require('../mockJSON');
 
-## 创建变量
+## create/add vaiables
 
     
     mock.data.USERNAME = ['jack', 'willian', 'jerry'];
     mock.data.GENDER = ['boy', 'girl', 'other'];
   
-## 创建模板
+## create/add template
     
     
     var temp = {
@@ -33,11 +33,11 @@
     }
 
 
-## 生成数据
+## render the template
 
    var json = mock.generate(temp);
    
-## 通过set/get设置及生成构造数据
+## bind or render by `set` & `get`
 
     var userList = {
         "data|1-30": [
@@ -59,9 +59,9 @@
         });
     }
 
-## 高级方法
+## Advanced methods
 
-### 使用方法设置变量
+### setting variables' attributes  with function
 
     /**
      * generate attributes with function;
@@ -95,14 +95,14 @@
             ideaid: 1333
     }});
 
-## 导入模板包
+## include template package
 
     var pkg = require('./mypackage');
     mock.include(pkg);
     var fruit = mock.get('fruit');
     var orange = mock.get('orange');
 
--- `mypackage.js` 的内容如下:
+-- the content of `mypackage.js` is listed as:
 
     // local variables
     exports.data = {
@@ -131,7 +131,7 @@ including the template file can auto loading all the `exports.xxx` object as tam
 and `exports.data` as local variable in package
 
 
-## 测试示例
+## test demo
 
     > mock.generate("@NUMBER") 
      12
